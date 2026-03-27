@@ -24,9 +24,9 @@
     --blue: #1A4A7A;
     --blue-soft: #EEF3FA;
   }
-
+ 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
+ 
   body {
     font-family: 'DM Sans', sans-serif;
     background: var(--bg);
@@ -34,8 +34,7 @@
     min-height: 100vh;
     font-size: 14px;
   }
-
-  /* Header */
+ 
   header {
     background: var(--text);
     color: #fff;
@@ -48,404 +47,102 @@
     top: 0;
     z-index: 100;
   }
-  .logo {
-    font-family: 'DM Serif Display', serif;
-    font-size: 18px;
-    letter-spacing: 0.01em;
-    color: #fff;
-  }
+  .logo { font-family: 'DM Serif Display', serif; font-size: 18px; letter-spacing: 0.01em; color: #fff; }
   .logo span { color: #E8785A; }
-  .header-meta {
-    font-size: 11px;
-    color: rgba(255,255,255,0.45);
-    font-family: 'DM Mono', monospace;
-    letter-spacing: 0.05em;
-  }
-
-  /* Layout */
+  .header-meta { font-size: 11px; color: rgba(255,255,255,0.45); font-family: 'DM Mono', monospace; letter-spacing: 0.05em; }
+ 
   main { max-width: 1200px; margin: 0 auto; padding: 2.5rem 2rem; }
-
-  /* Page title */
-  .page-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 36px;
-    font-weight: 400;
-    color: var(--text);
-    margin-bottom: 4px;
-    line-height: 1.1;
-  }
+ 
+  .page-title { font-family: 'DM Serif Display', serif; font-size: 36px; font-weight: 400; color: var(--text); margin-bottom: 4px; line-height: 1.1; }
   .page-title em { font-style: italic; color: var(--accent); }
-  .page-subtitle {
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-bottom: 2rem;
-  }
-
-  /* Stats row */
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    margin-bottom: 2rem;
-  }
-  .stat-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 1.25rem 1.5rem;
-    position: relative;
-    overflow: hidden;
-    transition: box-shadow 0.2s;
-  }
+  .page-subtitle { font-size: 13px; color: var(--text-muted); margin-bottom: 2rem; }
+ 
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 2rem; }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem 1.5rem; transition: box-shadow 0.2s; }
   .stat-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
   .stat-card.red { border-top: 3px solid var(--accent); }
   .stat-card.green { border-top: 3px solid var(--green); }
   .stat-card.amber { border-top: 3px solid var(--amber); }
   .stat-card.blue { border-top: 3px solid var(--blue); }
-  .stat-label {
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    margin-bottom: 8px;
-  }
-  .stat-value {
-    font-family: 'DM Serif Display', serif;
-    font-size: 32px;
-    color: var(--text);
-    line-height: 1;
-    margin-bottom: 4px;
-  }
-  .stat-sub {
-    font-size: 11px;
-    color: var(--text-light);
-    font-family: 'DM Mono', monospace;
-  }
-
-  /* Controls */
-  .controls {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 1.25rem;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-  .search-wrap {
-    position: relative;
-    flex: 1;
-    min-width: 200px;
-  }
-  .search-wrap svg {
-    position: absolute;
-    left: 11px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-muted);
-    pointer-events: none;
-  }
-  .search-wrap input {
-    width: 100%;
-    padding: 9px 12px 9px 34px;
-    font-size: 13px;
-    font-family: 'DM Sans', sans-serif;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    background: var(--surface);
-    color: var(--text);
-    outline: none;
-    transition: border-color 0.15s;
-  }
+  .stat-label { font-size: 11px; font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 8px; }
+  .stat-value { font-family: 'DM Serif Display', serif; font-size: 32px; color: var(--text); line-height: 1; margin-bottom: 4px; }
+  .stat-sub { font-size: 11px; color: var(--text-light); font-family: 'DM Mono', monospace; }
+ 
+  .controls { display: flex; gap: 10px; margin-bottom: 1.25rem; align-items: center; flex-wrap: wrap; }
+  .search-wrap { position: relative; flex: 1; min-width: 200px; }
+  .search-wrap svg { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none; }
+  .search-wrap input { width: 100%; padding: 9px 12px 9px 34px; font-size: 13px; font-family: 'DM Sans', sans-serif; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--text); outline: none; transition: border-color 0.15s; }
   .search-wrap input:focus { border-color: var(--text); }
-  select {
-    padding: 9px 14px;
-    font-size: 13px;
-    font-family: 'DM Sans', sans-serif;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    background: var(--surface);
-    color: var(--text);
-    cursor: pointer;
-    outline: none;
-  }
-  .btn-email-all {
-    padding: 9px 18px;
-    font-size: 13px;
-    font-weight: 500;
-    font-family: 'DM Sans', sans-serif;
-    background: var(--accent);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    transition: background 0.15s, transform 0.1s;
-    white-space: nowrap;
-  }
+  select { padding: 9px 14px; font-size: 13px; font-family: 'DM Sans', sans-serif; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--text); cursor: pointer; outline: none; }
+  .btn-email-all { padding: 9px 18px; font-size: 13px; font-weight: 500; font-family: 'DM Sans', sans-serif; background: var(--accent); color: white; border: none; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 7px; transition: background 0.15s, transform 0.1s; white-space: nowrap; }
   .btn-email-all:hover { background: #A82E20; }
   .btn-email-all:active { transform: scale(0.98); }
-
-  /* Table */
-  .table-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-  }
+ 
+  .table-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
   table { width: 100%; border-collapse: collapse; }
   thead { background: var(--surface2); }
-  thead th {
-    padding: 11px 14px;
-    font-size: 10.5px;
-    font-weight: 500;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    text-align: left;
-    border-bottom: 1px solid var(--border);
-    white-space: nowrap;
-  }
-  tbody tr {
-    border-bottom: 1px solid var(--border);
-    transition: background 0.12s;
-    animation: fadeIn 0.25s ease forwards;
-  }
+  thead th { padding: 11px 14px; font-size: 10.5px; font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.12s; animation: fadeIn 0.25s ease forwards; }
   tbody tr:last-child { border-bottom: none; }
   tbody tr:hover { background: #FAFAF8; }
   tbody td { padding: 12px 14px; vertical-align: middle; }
-  .td-email {
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    color: var(--text);
-  }
-  .td-rate {
-    font-size: 12px;
-    color: var(--text-muted);
-    font-family: 'DM Mono', monospace;
-    white-space: nowrap;
-  }
+  .td-email { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text); }
+  .td-rate { font-size: 12px; color: var(--text-muted); font-family: 'DM Mono', monospace; white-space: nowrap; }
   .months-wrap { display: flex; flex-wrap: wrap; gap: 4px; }
-  .month-pill {
-    font-size: 10.5px;
-    padding: 2px 8px;
-    border-radius: 99px;
-    background: var(--blue-soft);
-    color: var(--blue);
-    border: 1px solid #C4D6EE;
-    font-weight: 500;
-    white-space: nowrap;
-    font-family: 'DM Mono', monospace;
-  }
-  .td-count {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-muted);
-    text-align: center;
-  }
-  .td-total {
-    font-family: 'DM Serif Display', serif;
-    font-size: 15px;
-    color: var(--accent);
-    white-space: nowrap;
-  }
-  .btn-email {
-    padding: 6px 14px;
-    font-size: 12px;
-    font-weight: 500;
-    font-family: 'DM Sans', sans-serif;
-    background: transparent;
-    color: var(--text);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    transition: border-color 0.15s, background 0.15s;
-    white-space: nowrap;
-  }
+  .month-pill { font-size: 10.5px; padding: 2px 8px; border-radius: 99px; background: var(--blue-soft); color: var(--blue); border: 1px solid #C4D6EE; font-weight: 500; white-space: nowrap; font-family: 'DM Mono', monospace; }
+  .td-count { font-size: 13px; font-weight: 500; color: var(--text-muted); text-align: center; }
+  .td-total { font-family: 'DM Serif Display', serif; font-size: 15px; color: var(--accent); white-space: nowrap; }
+ 
+  /* Action buttons cell */
+  .td-actions { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+  .td-actions-row { display: flex; gap: 6px; flex-wrap: wrap; }
+ 
+  .btn-email { padding: 6px 14px; font-size: 12px; font-weight: 500; font-family: 'DM Sans', sans-serif; background: transparent; color: var(--text); border: 1px solid var(--border); border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: border-color 0.15s, background 0.15s; white-space: nowrap; }
   .btn-email:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
-
-  /* Badge for high owing */
-  .badge-high {
-    display: inline-block;
-    font-size: 9.5px;
-    font-weight: 500;
-    padding: 1px 6px;
-    border-radius: 4px;
-    background: var(--accent-soft);
-    color: var(--accent);
-    border: 1px solid var(--accent-border);
-    margin-left: 6px;
-    vertical-align: middle;
-    font-family: 'DM Mono', monospace;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-  }
-
+ 
+  /* Mark sent button */
+  .btn-mark-sent { padding: 6px 14px; font-size: 12px; font-weight: 500; font-family: 'DM Sans', sans-serif; background: var(--green-soft); color: var(--green); border: 1px solid #A8D9BE; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: background 0.15s; white-space: nowrap; }
+  .btn-mark-sent:hover { background: #D4EFE0; }
+ 
+  /* Sent tags */
+  .sent-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+  .sent-tag { font-size: 10.5px; padding: 2px 8px 2px 6px; border-radius: 99px; background: var(--green-soft); color: var(--green); border: 1px solid #A8D9BE; font-weight: 500; white-space: nowrap; font-family: 'DM Mono', monospace; display: flex; align-items: center; gap: 4px; }
+  .sent-tag-remove { background: none; border: none; cursor: pointer; color: var(--green); font-size: 12px; padding: 0; line-height: 1; opacity: 0.55; display: flex; align-items: center; }
+  .sent-tag-remove:hover { opacity: 1; }
+ 
+  .badge-high { display: inline-block; font-size: 9.5px; font-weight: 500; padding: 1px 6px; border-radius: 4px; background: var(--accent-soft); color: var(--accent); border: 1px solid var(--accent-border); margin-left: 6px; vertical-align: middle; font-family: 'DM Mono', monospace; letter-spacing: 0.03em; text-transform: uppercase; }
+ 
+  .empty { padding: 3rem; text-align: center; color: var(--text-muted); font-size: 13px; }
+ 
   /* Modal */
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(20,18,16,0.55);
-    z-index: 200;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    backdrop-filter: blur(2px);
-  }
+  .modal-overlay { position: fixed; inset: 0; background: rgba(20,18,16,0.55); z-index: 200; display: none; align-items: center; justify-content: center; padding: 1rem; backdrop-filter: blur(2px); }
   .modal-overlay.open { display: flex; }
-  .modal {
-    background: var(--surface);
-    border-radius: 14px;
-    width: 100%;
-    max-width: 560px;
-    border: 1px solid var(--border);
-    overflow: hidden;
-    animation: slideUp 0.2s ease;
-  }
-  .modal-header {
-    background: var(--text);
-    color: white;
-    padding: 1.25rem 1.5rem;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 12px;
-  }
-  .modal-header h2 {
-    font-family: 'DM Serif Display', serif;
-    font-size: 18px;
-    font-weight: 400;
-  }
-  .modal-header p {
-    font-size: 11px;
-    color: rgba(255,255,255,0.5);
-    margin-top: 2px;
-    font-family: 'DM Mono', monospace;
-  }
-  .modal-close {
-    background: none;
-    border: none;
-    color: rgba(255,255,255,0.6);
-    font-size: 20px;
-    cursor: pointer;
-    padding: 0;
-    line-height: 1;
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
+  .modal { background: var(--surface); border-radius: 14px; width: 100%; max-width: 560px; border: 1px solid var(--border); overflow: hidden; animation: slideUp 0.2s ease; }
+  .modal-header { background: var(--text); color: white; padding: 1.25rem 1.5rem; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+  .modal-header h2 { font-family: 'DM Serif Display', serif; font-size: 18px; font-weight: 400; }
+  .modal-header p { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 2px; font-family: 'DM Mono', monospace; }
+  .modal-close { background: none; border: none; color: rgba(255,255,255,0.6); font-size: 20px; cursor: pointer; padding: 0; line-height: 1; flex-shrink: 0; margin-top: 2px; }
   .modal-close:hover { color: white; }
   .modal-body { padding: 1.5rem; }
   .field { margin-bottom: 1rem; }
-  .field label {
-    display: block;
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    margin-bottom: 5px;
-  }
-  .field input, .field textarea {
-    width: 100%;
-    padding: 9px 12px;
-    font-size: 13px;
-    font-family: 'DM Sans', sans-serif;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    background: var(--surface);
-    color: var(--text);
-    outline: none;
-    transition: border-color 0.15s;
-  }
-  .field textarea {
-    resize: vertical;
-    min-height: 180px;
-    line-height: 1.6;
-  }
+  .field label { display: block; font-size: 11px; font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 5px; }
+  .field input, .field textarea { width: 100%; padding: 9px 12px; font-size: 13px; font-family: 'DM Sans', sans-serif; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--text); outline: none; transition: border-color 0.15s; }
+  .field textarea { resize: vertical; min-height: 180px; line-height: 1.6; }
   .field input:focus, .field textarea:focus { border-color: var(--text); }
-  .field input[readonly] {
-    background: var(--surface2);
-    color: var(--text-muted);
-    cursor: default;
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-  }
-  .modal-footer {
-    padding: 1rem 1.5rem;
-    border-top: 1px solid var(--border);
-    display: flex;
-    gap: 8px;
-    justify-content: flex-end;
-    background: var(--surface2);
-  }
-  .btn-cancel {
-    padding: 9px 18px;
-    font-size: 13px;
-    font-family: 'DM Sans', sans-serif;
-    background: transparent;
-    color: var(--text-muted);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.12s;
-  }
+  .field input[readonly] { background: var(--surface2); color: var(--text-muted); cursor: default; font-family: 'DM Mono', monospace; font-size: 12px; }
+  .modal-footer { padding: 1rem 1.5rem; border-top: 1px solid var(--border); display: flex; gap: 8px; justify-content: flex-end; background: var(--surface2); }
+  .btn-cancel { padding: 9px 18px; font-size: 13px; font-family: 'DM Sans', sans-serif; background: transparent; color: var(--text-muted); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: background 0.12s; }
   .btn-cancel:hover { background: var(--border); }
-  .btn-send {
-    padding: 9px 20px;
-    font-size: 13px;
-    font-weight: 500;
-    font-family: 'DM Sans', sans-serif;
-    background: var(--accent);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    transition: background 0.15s;
-  }
+  .btn-send { padding: 9px 20px; font-size: 13px; font-weight: 500; font-family: 'DM Sans', sans-serif; background: var(--accent); color: white; border: none; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: background 0.15s; }
   .btn-send:hover { background: #A82E20; }
-
-  .notice {
-    font-size: 11px;
-    color: var(--text-light);
-    font-family: 'DM Mono', monospace;
-    margin-top: 3px;
-  }
-
-  /* Empty state */
-  .empty {
-    padding: 3rem;
-    text-align: center;
-    color: var(--text-muted);
-    font-size: 13px;
-  }
-
-  /* Footer */
-  footer {
-    text-align: center;
-    padding: 2rem;
-    font-size: 11px;
-    color: var(--text-light);
-    font-family: 'DM Mono', monospace;
-    letter-spacing: 0.05em;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(4px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
+  .notice { font-size: 11px; color: var(--text-light); font-family: 'DM Mono', monospace; margin-top: 3px; }
+ 
+  footer { text-align: center; padding: 2rem; font-size: 11px; color: var(--text-light); font-family: 'DM Mono', monospace; letter-spacing: 0.05em; }
+ 
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+ 
+  /* ── MOBILE ── */
   @media (max-width: 768px) {
     header { padding: 0 1rem; }
     main { padding: 1.5rem 1rem; }
@@ -454,23 +151,37 @@
     .controls { flex-direction: column; }
     .search-wrap { min-width: 100%; }
     .btn-email-all { width: 100%; justify-content: center; }
+ 
+    /* Hide months column on mobile to make room */
     thead th:nth-child(3), tbody td:nth-child(3) { display: none; }
+    /* Hide missed count on mobile */
+    thead th:nth-child(4), tbody td:nth-child(4) { display: none; }
+    /* Hide rate on mobile */
+    thead th:nth-child(2), tbody td:nth-child(2) { display: none; }
+ 
+    /* Make email and total always visible */
+    .td-total { font-size: 13px; }
+    .td-email { font-size: 11px; word-break: break-all; }
+ 
+    /* Stack action buttons vertically on mobile */
+    .td-actions-row { flex-direction: column; }
+    .btn-email, .btn-mark-sent { width: 100%; justify-content: center; font-size: 11px; padding: 7px 10px; }
   }
 </style>
 </head>
 <body>
-
+ 
 <header>
   <div class="logo">HCC <span>Distribution</span></div>
   <div class="header-meta">MISSED PAYMENTS DASHBOARD — MAR 2026</div>
 </header>
-
+ 
 <main>
   <div>
     <h1 class="page-title">Payment <em>Missed Payments</em></h1>
     <p class="page-subtitle">Subscribers with outstanding balances · Data from Oct 2025 – Mar 2026</p>
   </div>
-
+ 
   <div class="stats">
     <div class="stat-card red">
       <div class="stat-label">Total outstanding</div>
@@ -493,7 +204,7 @@
       <div class="stat-sub">MYR average</div>
     </div>
   </div>
-
+ 
   <div class="controls">
     <div class="search-wrap">
       <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -519,7 +230,7 @@
       Email all subscribers
     </button>
   </div>
-
+ 
   <div class="table-card">
     <table>
       <thead>
@@ -537,9 +248,9 @@
     <div id="emptyState" class="empty" style="display:none">No subscribers match your search.</div>
   </div>
 </main>
-
+ 
 <footer>HCC Distribution · Generated March 2026 · All amounts in MYR</footer>
-
+ 
 <!-- Email Modal -->
 <div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
   <div class="modal">
@@ -574,7 +285,7 @@
     </div>
   </div>
 </div>
-
+ 
 <script>
 const subscribers = [
   {email:"abdulqayyum9543@gmail.com",rate:280,months:["Jan 2026","Feb 2026","Mar 2026"],total:840},
@@ -623,57 +334,81 @@ const subscribers = [
   {email:"wei.hung1995@gmail.com",rate:280,months:["Jan 2026"],total:280},
   {email:"zappos.co@hotmail.com",rate:180,months:["Nov 2025"],total:180},
 ];
-
+ 
+// ── Sent log: persisted in localStorage so tags survive page refresh ──
+let sentLog = {};
+try { sentLog = JSON.parse(localStorage.getItem('hcc_sent_log') || '{}'); } catch(e) {}
+ 
+function saveSentLog() {
+  try { localStorage.setItem('hcc_sent_log', JSON.stringify(sentLog)); } catch(e) {}
+}
+ 
+function markSent(email) {
+  const now = new Date();
+  const tag = now.toLocaleString('en-MY', { month: 'long', year: 'numeric' });
+  if (!sentLog[email]) sentLog[email] = [];
+  if (!sentLog[email].includes(tag)) {
+    sentLog[email].push(tag);
+    saveSentLog();
+    renderTable();
+  }
+}
+ 
+function removeSentTag(email, tag) {
+  if (!sentLog[email]) return;
+  sentLog[email] = sentLog[email].filter(t => t !== tag);
+  if (!sentLog[email].length) delete sentLog[email];
+  saveSentLog();
+  renderTable();
+}
+ 
 function buildEmailBody(sub) {
   const monthsList = sub.months.join(', ');
   return `Dear subscriber,
-
+ 
 We hope this message finds you well.
-
+ 
 We are writing to inform you that we have noticed an outstanding balance on your HCC Distribution subscription account. Our records indicate that payment was not successfully processed for the following month(s):
-
+ 
   ${monthsList}
-
+ 
 Outstanding amount: MYR ${sub.total.toLocaleString()}
 Monthly subscription rate: MYR ${sub.rate}
-
+ 
 Please note that your subscription is running to cancel. To continue enjoying HCC Distribution services, please settle your outstanding balance at your earliest convenience.
-
+ 
 Please also be aware that a late payment fee may be applied to outstanding balances, and prolonged unpaid balances may be referred to a third-party debt collection agency.
-
+ 
 If you believe this is an error, or if you are experiencing any difficulties with payment, please do not hesitate to reach out to us and we will be happy to assist you.
-
+ 
 Thank you for being a valued subscriber of HCC Distribution.
-
+ 
 Warm regards,
 HCC Distribution Team`;
 }
-
+ 
 function buildEmailBodyAll(subs) {
   const count = subs.length;
   return `Dear subscribers,
-
+ 
 We hope this message finds you well.
-
+ 
 This is a payment reminder from HCC Distribution. Our records indicate that ${count} subscriber accounts have outstanding balances due to unsuccessful payment processing.
-
+ 
 Please note that your subscription is running to cancel. To continue enjoying HCC Distribution services, please settle your outstanding balance at your earliest convenience.
-
+ 
 Please also be aware that a late payment fee may be applied to outstanding balances, and prolonged unpaid balances may be referred to a third-party debt collection agency.
-
+ 
 If you have already made payment, or if you believe there is an error on your account, please contact us directly and we will be happy to assist.
-
+ 
 Thank you for your continued support of HCC Distribution.
-
+ 
 Warm regards,
 HCC Distribution Team`;
 }
-
-let currentSubs = [];
-
+ 
 function openEmailSingle(email) {
   const sub = subscribers.find(s => s.email === email);
-  currentSubs = [sub];
   document.getElementById('modalTitle').textContent = 'Send payment reminder';
   document.getElementById('modalSubtitle').textContent = '1 recipient';
   document.getElementById('emailTo').value = email;
@@ -681,7 +416,7 @@ function openEmailSingle(email) {
   document.getElementById('emailBody').value = buildEmailBody(sub);
   document.getElementById('modalOverlay').classList.add('open');
 }
-
+ 
 function openEmailAll() {
   const q = document.getElementById('search').value.toLowerCase();
   const fm = document.getElementById('filterMonth').value;
@@ -690,24 +425,17 @@ function openEmailAll() {
     if (fm && !s.months.includes(fm)) return false;
     return true;
   });
-  currentSubs = subs;
-  const emails = subs.map(s => s.email).join('; ');
   document.getElementById('modalTitle').textContent = 'Email all matching subscribers';
   document.getElementById('modalSubtitle').textContent = subs.length + ' recipients';
-  document.getElementById('emailTo').value = emails;
+  document.getElementById('emailTo').value = subs.map(s => s.email).join('; ');
   document.getElementById('emailSubject').value = 'Payment reminder — HCC Distribution subscription';
   document.getElementById('emailBody').value = buildEmailBodyAll(subs);
   document.getElementById('modalOverlay').classList.add('open');
 }
-
-function closeModal() {
-  document.getElementById('modalOverlay').classList.remove('open');
-}
-
-function handleOverlayClick(e) {
-  if (e.target === document.getElementById('modalOverlay')) closeModal();
-}
-
+ 
+function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
+function handleOverlayClick(e) { if (e.target === document.getElementById('modalOverlay')) closeModal(); }
+ 
 function sendEmail() {
   const to = document.getElementById('emailTo').value;
   const subject = encodeURIComponent(document.getElementById('emailSubject').value);
@@ -715,37 +443,45 @@ function sendEmail() {
   window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
   closeModal();
 }
-
+ 
 function renderTable() {
   const q = document.getElementById('search').value.toLowerCase();
   const sort = document.getElementById('sortBy').value;
   const fm = document.getElementById('filterMonth').value;
-
+ 
   let rows = subscribers.filter(s => {
     if (q && !s.email.toLowerCase().includes(q)) return false;
     if (fm && !s.months.includes(fm)) return false;
     return true;
   });
-
+ 
   if (sort === 'total_desc') rows.sort((a, b) => b.total - a.total);
   else if (sort === 'total_asc') rows.sort((a, b) => a.total - b.total);
   else if (sort === 'months_desc') rows.sort((a, b) => b.months.length - a.months.length);
   else rows.sort((a, b) => a.email.localeCompare(b.email));
-
+ 
   const tbody = document.getElementById('tableBody');
   const empty = document.getElementById('emptyState');
-
-  if (rows.length === 0) {
-    tbody.innerHTML = '';
-    empty.style.display = 'block';
-    return;
-  }
+ 
+  if (rows.length === 0) { tbody.innerHTML = ''; empty.style.display = 'block'; return; }
   empty.style.display = 'none';
-
+ 
   tbody.innerHTML = rows.map(s => {
-    const high = s.total >= 840;
-    const badge = high ? '<span class="badge-high">high</span>' : '';
+    const badge = s.total >= 840 ? '<span class="badge-high">high</span>' : '';
     const pills = s.months.map(m => `<span class="month-pill">${m}</span>`).join('');
+    const sentList = sentLog[s.email] || [];
+    const sentTagsHtml = sentList.length
+      ? `<div class="sent-tags">${sentList.map(tag =>
+          `<span class="sent-tag">
+            <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            ${tag}
+            <button class="sent-tag-remove" onclick="removeSentTag('${s.email}','${tag}')" title="Remove tag">
+              <svg width="9" height="9" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </span>`
+        ).join('')}</div>`
+      : '';
+ 
     return `<tr>
       <td class="td-email">${s.email}${badge}</td>
       <td class="td-rate">MYR ${s.rate}/mo</td>
@@ -753,20 +489,27 @@ function renderTable() {
       <td class="td-count">${s.months.length}</td>
       <td class="td-total">MYR ${s.total.toLocaleString()}</td>
       <td>
-        <button class="btn-email" onclick="openEmailSingle('${s.email}')">
-          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-          Email
-        </button>
+        <div class="td-actions">
+          <div class="td-actions-row">
+            <button class="btn-email" onclick="openEmailSingle('${s.email}')">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              Email
+            </button>
+            <button class="btn-mark-sent" onclick="markSent('${s.email}')">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              Mark sent
+            </button>
+          </div>
+          ${sentTagsHtml}
+        </div>
       </td>
     </tr>`;
   }).join('');
 }
-
+ 
 renderTable();
-
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeModal();
-});
+ 
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 </script>
 </body>
 </html>
