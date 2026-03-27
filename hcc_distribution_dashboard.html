@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HCC Distribution — Arrears Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F7F5F0;
+    --surface: #FFFFFF;
+    --surface2: #F0EDE6;
+    --border: #E2DDD6;
+    --text: #1A1815;
+    --text-muted: #8A857C;
+    --text-light: #B8B2A8;
+    --accent: #C4392A;
+    --accent-soft: #FAF0EE;
+    --accent-border: #F0C4BE;
+    --green: #2A6B4A;
+    --green-soft: #EEF7F2;
+    --amber: #9B6B1A;
+    --amber-soft: #FDF6E8;
+    --blue: #1A4A7A;
+    --blue-soft: #EEF3FA;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 14px;
+  }
+
+  /* Header */
+  header {
+    background: var(--text);
+    color: #fff;
+    padding: 0 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    letter-spacing: 0.01em;
+    color: #fff;
+  }
+  .logo span { color: #E8785A; }
+  .header-meta {
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+
+  /* Layout */
+  main { max-width: 1200px; margin: 0 auto; padding: 2.5rem 2rem; }
+
+  /* Page title */
+  .page-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 36px;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 4px;
+    line-height: 1.1;
+  }
+  .page-title em { font-style: italic; color: var(--accent); }
+  .page-subtitle {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+  }
+
+  /* Stats row */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 2rem;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .stat-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+  .stat-card.red { border-top: 3px solid var(--accent); }
+  .stat-card.green { border-top: 3px solid var(--green); }
+  .stat-card.amber { border-top: 3px solid var(--amber); }
+  .stat-card.blue { border-top: 3px solid var(--blue); }
+  .stat-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 8px;
+  }
+  .stat-value {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-sub {
+    font-size: 11px;
+    color: var(--text-light);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* Controls */
+  .controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1.25rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .search-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+  }
+  .search-wrap svg {
+    position: absolute;
+    left: 11px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+  }
+  .search-wrap input {
+    width: 100%;
+    padding: 9px 12px 9px 34px;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .search-wrap input:focus { border-color: var(--text); }
+  select {
+    padding: 9px 14px;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    outline: none;
+  }
+  .btn-email-all {
+    padding: 9px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    transition: background 0.15s, transform 0.1s;
+    white-space: nowrap;
+  }
+  .btn-email-all:hover { background: #A82E20; }
+  .btn-email-all:active { transform: scale(0.98); }
+
+  /* Table */
+  .table-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  table { width: 100%; border-collapse: collapse; }
+  thead { background: var(--surface2); }
+  thead th {
+    padding: 11px 14px;
+    font-size: 10.5px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.12s;
+    animation: fadeIn 0.25s ease forwards;
+  }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: #FAFAF8; }
+  tbody td { padding: 12px 14px; vertical-align: middle; }
+  .td-email {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text);
+  }
+  .td-rate {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: 'DM Mono', monospace;
+    white-space: nowrap;
+  }
+  .months-wrap { display: flex; flex-wrap: wrap; gap: 4px; }
+  .month-pill {
+    font-size: 10.5px;
+    padding: 2px 8px;
+    border-radius: 99px;
+    background: var(--blue-soft);
+    color: var(--blue);
+    border: 1px solid #C4D6EE;
+    font-weight: 500;
+    white-space: nowrap;
+    font-family: 'DM Mono', monospace;
+  }
+  .td-count {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-align: center;
+  }
+  .td-total {
+    font-family: 'DM Serif Display', serif;
+    font-size: 15px;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .btn-email {
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: border-color 0.15s, background 0.15s;
+    white-space: nowrap;
+  }
+  .btn-email:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+
+  /* Badge for high owing */
+  .badge-high {
+    display: inline-block;
+    font-size: 9.5px;
+    font-weight: 500;
+    padding: 1px 6px;
+    border-radius: 4px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border: 1px solid var(--accent-border);
+    margin-left: 6px;
+    vertical-align: middle;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(20,18,16,0.55);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    backdrop-filter: blur(2px);
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--surface);
+    border-radius: 14px;
+    width: 100%;
+    max-width: 560px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    animation: slideUp 0.2s ease;
+  }
+  .modal-header {
+    background: var(--text);
+    color: white;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .modal-header h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    font-weight: 400;
+  }
+  .modal-header p {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 2px;
+    font-family: 'DM Mono', monospace;
+  }
+  .modal-close {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.6);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .modal-close:hover { color: white; }
+  .modal-body { padding: 1.5rem; }
+  .field { margin-bottom: 1rem; }
+  .field label {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 5px;
+  }
+  .field input, .field textarea {
+    width: 100%;
+    padding: 9px 12px;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .field textarea {
+    resize: vertical;
+    min-height: 180px;
+    line-height: 1.6;
+  }
+  .field input:focus, .field textarea:focus { border-color: var(--text); }
+  .field input[readonly] {
+    background: var(--surface2);
+    color: var(--text-muted);
+    cursor: default;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+  }
+  .modal-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    background: var(--surface2);
+  }
+  .btn-cancel {
+    padding: 9px 18px;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.12s;
+  }
+  .btn-cancel:hover { background: var(--border); }
+  .btn-send {
+    padding: 9px 20px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.15s;
+  }
+  .btn-send:hover { background: #A82E20; }
+
+  .notice {
+    font-size: 11px;
+    color: var(--text-light);
+    font-family: 'DM Mono', monospace;
+    margin-top: 3px;
+  }
+
+  /* Empty state */
+  .empty {
+    padding: 3rem;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: 11px;
+    color: var(--text-light);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 768px) {
+    header { padding: 0 1rem; }
+    main { padding: 1.5rem 1rem; }
+    .page-title { font-size: 26px; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .controls { flex-direction: column; }
+    .search-wrap { min-width: 100%; }
+    .btn-email-all { width: 100%; justify-content: center; }
+    thead th:nth-child(3), tbody td:nth-child(3) { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">HCC <span>Distribution</span></div>
+  <div class="header-meta">ARREARS DASHBOARD — MAR 2026</div>
+</header>
+
+<main>
+  <div>
+    <h1 class="page-title">Payment <em>Arrears</em></h1>
+    <p class="page-subtitle">Subscribers with outstanding balances · Data from Oct 2025 – Mar 2026</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat-card red">
+      <div class="stat-label">Total outstanding</div>
+      <div class="stat-value">22,070</div>
+      <div class="stat-sub">MYR</div>
+    </div>
+    <div class="stat-card amber">
+      <div class="stat-label">Subscribers in arrears</div>
+      <div class="stat-value">45</div>
+      <div class="stat-sub">accounts</div>
+    </div>
+    <div class="stat-card blue">
+      <div class="stat-label">Total months missed</div>
+      <div class="stat-value">113</div>
+      <div class="stat-sub">across all subscribers</div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-label">Avg owed per subscriber</div>
+      <div class="stat-value">490</div>
+      <div class="stat-sub">MYR average</div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="search-wrap">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="search" placeholder="Search by email..." oninput="renderTable()">
+    </div>
+    <select id="sortBy" onchange="renderTable()">
+      <option value="total_desc">Highest owed first</option>
+      <option value="total_asc">Lowest owed first</option>
+      <option value="months_desc">Most months missed</option>
+      <option value="email_asc">Email A–Z</option>
+    </select>
+    <select id="filterMonth" onchange="renderTable()">
+      <option value="">All months</option>
+      <option>Oct 2025</option>
+      <option>Nov 2025</option>
+      <option>Dec 2025</option>
+      <option>Jan 2026</option>
+      <option>Feb 2026</option>
+      <option>Mar 2026</option>
+    </select>
+    <button class="btn-email-all" onclick="openEmailAll()">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      Email all subscribers
+    </button>
+  </div>
+
+  <div class="table-card">
+    <table>
+      <thead>
+        <tr>
+          <th>Email address</th>
+          <th>Monthly rate</th>
+          <th>Months not paid</th>
+          <th style="text-align:center">Missed</th>
+          <th>Total owed</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+    <div id="emptyState" class="empty" style="display:none">No subscribers match your search.</div>
+  </div>
+</main>
+
+<footer>HCC Distribution · Generated March 2026 · All amounts in MYR</footer>
+
+<!-- Email Modal -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <h2 id="modalTitle">Send payment reminder</h2>
+        <p id="modalSubtitle">1 recipient</p>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label>To</label>
+        <input type="text" id="emailTo" readonly>
+      </div>
+      <div class="field">
+        <label>Subject</label>
+        <input type="text" id="emailSubject" value="Payment reminder — HCC Distribution subscription">
+      </div>
+      <div class="field">
+        <label>Message</label>
+        <textarea id="emailBody"></textarea>
+        <div class="notice">* Personalised with subscriber details. You can edit before sending.</div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-send" onclick="sendEmail()">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        Open in mail client
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+const subscribers = [
+  {email:"abdulqayyum9543@gmail.com",rate:280,months:["Jan 2026","Feb 2026","Mar 2026"],total:840},
+  {email:"adam.muhammad.azri@gmail.com",rate:50,months:["Dec 2025"],total:50},
+  {email:"aisyah290603@yahoo.com",rate:280,months:["Jan 2026","Feb 2026","Mar 2026"],total:840},
+  {email:"anis.amilah93@gmail.com",rate:280,months:["Dec 2025"],total:280},
+  {email:"arissaazren@gmail.com",rate:280,months:["Jan 2026","Feb 2026","Mar 2026"],total:840},
+  {email:"asyrafidz@gmail.com",rate:280,months:["Jan 2026","Feb 2026","Mar 2026"],total:840},
+  {email:"aziraherman1998@gmail.com",rate:280,months:["Jan 2026"],total:280},
+  {email:"cheokjx.melissa@gmail.com",rate:100,months:["Dec 2025","Feb 2026"],total:200},
+  {email:"danialradzmi@gmail.com",rate:180,months:["Nov 2025","Dec 2025"],total:360},
+  {email:"edmundfong0@gmail.com",rate:180,months:["Jan 2026"],total:180},
+  {email:"fabuloustea8@gmail.com",rate:280,months:["Dec 2025","Jan 2026","Feb 2026","Mar 2026"],total:1120},
+  {email:"fadhilahrohani@gmail.com",rate:180,months:["Nov 2025","Dec 2025"],total:360},
+  {email:"fairuzhamizah@gmail.com",rate:280,months:["Dec 2025","Jan 2026","Feb 2026","Mar 2026"],total:1120},
+  {email:"faith.work.blue@gmail.com",rate:50,months:["Jan 2026","Feb 2026","Mar 2026"],total:150},
+  {email:"fifymanz@icloud.com",rate:180,months:["Nov 2025","Jan 2026"],total:360},
+  {email:"fitriazahar9511@gmail.com",rate:280,months:["Jan 2026"],total:280},
+  {email:"hlin30964@gmail.com",rate:280,months:["Jan 2026","Feb 2026","Mar 2026"],total:840},
+  {email:"hodilun@yahoo.com",rate:180,months:["Nov 2025","Dec 2025","Jan 2026","Feb 2026","Mar 2026"],total:900},
+  {email:"hohmeishuen@gmail.com",rate:280,months:["Dec 2025"],total:280},
+  {email:"i.intanhusin@gmail.com",rate:180,months:["Jan 2026","Feb 2026","Mar 2026"],total:540},
+  {email:"imahramlii@gmail.com",rate:280,months:["Jan 2026","Feb 2026","Mar 2026"],total:840},
+  {email:"ismailbinishak15@gmail.com",rate:180,months:["Nov 2025","Dec 2025","Jan 2026","Feb 2026","Mar 2026"],total:900},
+  {email:"jeziccayee@gmail.com",rate:50,months:["Oct 2025"],total:50},
+  {email:"mkamarulothman@gmail.com",rate:280,months:["Feb 2026"],total:280},
+  {email:"muzaffar.muda97@gmail.com",rate:180,months:["Nov 2025","Dec 2025"],total:360},
+  {email:"mynameisfaez13@gmail.com",rate:280,months:["Mar 2026"],total:280},
+  {email:"nabilah.abdulrazak@gmail.com",rate:180,months:["Jan 2026"],total:180},
+  {email:"nas.bizwork@gmail.com",rate:180,months:["Dec 2025"],total:180},
+  {email:"nfikri.mustapa@gmail.com",rate:180,months:["Dec 2025","Jan 2026"],total:360},
+  {email:"noraynzae@gmail.com",rate:180,months:["Oct 2025"],total:180},
+  {email:"norsyafiqah.zaidon@gmail.com",rate:180,months:["Jan 2026"],total:180},
+  {email:"nurin.nf8@gmail.com",rate:280,months:["Nov 2025","Feb 2026","Mar 2026"],total:840},
+  {email:"perlbiz@hotmail.com",rate:280,months:["Dec 2025"],total:280},
+  {email:"reannsyra@gmail.com",rate:180,months:["Jan 2026","Feb 2026","Mar 2026"],total:540},
+  {email:"rikan0427@gmail.com",rate:180,months:["Oct 2025"],total:180},
+  {email:"ruzani.rashidtan@gmail.com",rate:180,months:["Jan 2026"],total:180},
+  {email:"salsabila.jalil@gmail.com",rate:280,months:["Mar 2026"],total:280},
+  {email:"shizukufreak@gmail.com",rate:50,months:["Nov 2025","Dec 2025","Jan 2026"],total:150},
+  {email:"syafiqsahrol@gmail.com",rate:50,months:["Dec 2025","Jan 2026"],total:100},
+  {email:"teepeipei1997@gmail.com",rate:180,months:["Nov 2025","Dec 2025","Jan 2026","Feb 2026","Mar 2026"],total:900},
+  {email:"thiraziz@gmail.com",rate:50,months:["Nov 2025","Dec 2025"],total:100},
+  {email:"vanessalua.sakai@gmail.com",rate:180,months:["Dec 2025","Jan 2026","Feb 2026","Mar 2026"],total:720},
+  {email:"vego46075@gmail.com",rate:280,months:["Dec 2025","Jan 2026","Feb 2026","Mar 2026"],total:1120},
+  {email:"wei.hung1995@gmail.com",rate:280,months:["Jan 2026"],total:280},
+  {email:"zappos.co@hotmail.com",rate:180,months:["Nov 2025"],total:180},
+];
+
+function buildEmailBody(sub) {
+  const monthsList = sub.months.join(', ');
+  return `Dear subscriber,
+
+We hope this message finds you well.
+
+We are writing to inform you that we have noticed an outstanding balance on your HCC Distribution subscription account. Our records indicate that payment was not successfully processed for the following month(s):
+
+  ${monthsList}
+
+Outstanding amount: MYR ${sub.total.toLocaleString()}
+Monthly subscription rate: MYR ${sub.rate}
+
+We kindly request that you settle the above amount at your earliest convenience to avoid any disruption to your subscription.
+
+If you believe this is an error, or if you are experiencing difficulties with payment, please do not hesitate to reach out to us and we will be happy to assist.
+
+Thank you for being a valued subscriber of HCC Distribution.
+
+Warm regards,
+HCC Distribution Team`;
+}
+
+function buildEmailBodyAll(subs) {
+  const count = subs.length;
+  return `Dear subscribers,
+
+We hope this message finds you well.
+
+This is a payment reminder from HCC Distribution. Our records indicate that the following ${count} subscriber accounts have outstanding balances due to unsuccessful payment processing.
+
+We kindly request that each of you review your subscription payment and settle any outstanding amount at your earliest convenience.
+
+If you have already made payment, or if you believe there is an error on your account, please contact us directly and we will be happy to assist.
+
+Thank you for your continued support of HCC Distribution.
+
+Warm regards,
+HCC Distribution Team`;
+}
+
+let currentSubs = [];
+
+function openEmailSingle(email) {
+  const sub = subscribers.find(s => s.email === email);
+  currentSubs = [sub];
+  document.getElementById('modalTitle').textContent = 'Send payment reminder';
+  document.getElementById('modalSubtitle').textContent = '1 recipient';
+  document.getElementById('emailTo').value = email;
+  document.getElementById('emailSubject').value = 'Payment reminder — HCC Distribution subscription';
+  document.getElementById('emailBody').value = buildEmailBody(sub);
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function openEmailAll() {
+  const q = document.getElementById('search').value.toLowerCase();
+  const fm = document.getElementById('filterMonth').value;
+  let subs = subscribers.filter(s => {
+    if (q && !s.email.toLowerCase().includes(q)) return false;
+    if (fm && !s.months.includes(fm)) return false;
+    return true;
+  });
+  currentSubs = subs;
+  const emails = subs.map(s => s.email).join('; ');
+  document.getElementById('modalTitle').textContent = 'Email all matching subscribers';
+  document.getElementById('modalSubtitle').textContent = subs.length + ' recipients';
+  document.getElementById('emailTo').value = emails;
+  document.getElementById('emailSubject').value = 'Payment reminder — HCC Distribution subscription';
+  document.getElementById('emailBody').value = buildEmailBodyAll(subs);
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+function sendEmail() {
+  const to = document.getElementById('emailTo').value;
+  const subject = encodeURIComponent(document.getElementById('emailSubject').value);
+  const body = encodeURIComponent(document.getElementById('emailBody').value);
+  window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+  closeModal();
+}
+
+function renderTable() {
+  const q = document.getElementById('search').value.toLowerCase();
+  const sort = document.getElementById('sortBy').value;
+  const fm = document.getElementById('filterMonth').value;
+
+  let rows = subscribers.filter(s => {
+    if (q && !s.email.toLowerCase().includes(q)) return false;
+    if (fm && !s.months.includes(fm)) return false;
+    return true;
+  });
+
+  if (sort === 'total_desc') rows.sort((a, b) => b.total - a.total);
+  else if (sort === 'total_asc') rows.sort((a, b) => a.total - b.total);
+  else if (sort === 'months_desc') rows.sort((a, b) => b.months.length - a.months.length);
+  else rows.sort((a, b) => a.email.localeCompare(b.email));
+
+  const tbody = document.getElementById('tableBody');
+  const empty = document.getElementById('emptyState');
+
+  if (rows.length === 0) {
+    tbody.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  tbody.innerHTML = rows.map(s => {
+    const high = s.total >= 840;
+    const badge = high ? '<span class="badge-high">high</span>' : '';
+    const pills = s.months.map(m => `<span class="month-pill">${m}</span>`).join('');
+    return `<tr>
+      <td class="td-email">${s.email}${badge}</td>
+      <td class="td-rate">MYR ${s.rate}/mo</td>
+      <td><div class="months-wrap">${pills}</div></td>
+      <td class="td-count">${s.months.length}</td>
+      <td class="td-total">MYR ${s.total.toLocaleString()}</td>
+      <td>
+        <button class="btn-email" onclick="openEmailSingle('${s.email}')">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          Email
+        </button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+renderTable();
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+</script>
+</body>
+</html>
